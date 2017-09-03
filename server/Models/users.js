@@ -1,14 +1,25 @@
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
+const _=require("lodash");
 const bcrypt=require("bcryptjs");
+const validator = require("validator");
 const UserSchema = mongoose.Schema({
     name: {
         type: String,
-        required: true
+        required: true,
+        
     },
     email: {
         type: String,
-        required: true
+        required: true,
+        trim: true,
+        minlength: 1,
+        unique: true,
+        validate: {
+            isAsync: false,
+            validator: validator.isEmail,
+            message: '{Value} is not valid'
+        }
     },
     password: {
         type: String,
@@ -45,10 +56,7 @@ const UserSchema = mongoose.Schema({
         }
     }]
 
-
 });
-
-
 
 UserSchema.methods.generateAuthToken = function () {
     let user = this;
@@ -60,6 +68,11 @@ UserSchema.methods.generateAuthToken = function () {
            return token;
        }
    );
+}
+UserSchema.methods.toJSON=function(){//this function detemines what exactly gets send back when a mongoose model get converted into JSON
+    let user=this;
+    let userObject=user.toObject();//this function is reponsible for taking our mongoose variable 'user' and converts into regular object
+    return _.pick(userObject,["name","email"]);
 }
 
 UserSchema.statics.findByToken = function (token) {
