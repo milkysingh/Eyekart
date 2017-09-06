@@ -1,15 +1,14 @@
 const express = require('express');
 const app = express();
+const cors=require("cors");
 const body_parser=require("body-parser");
 const path = require("path");
 const port = process.env.PORT||3000;
-const _=require("lodash");
+
 const {ObjectId}=require("mongodb");
 
 const {Mongoose}=require('./db/mongoose');
-const {User}=require('./Models/users');
-const {Product}=require('./Models/glasses');
-const {authenticate}=require("./Middleware/authenticate");
+
 
 const Sunglasses=require("./Routes/sunglasses");
 const Eyeglasses=require("./Routes/eyeglasses");
@@ -19,7 +18,7 @@ const newProduct=require("./Routes/add-new-product");
 
 app.use(body_parser.json());
 app.use(express.static(path.join(__dirname,"public")));
-
+app.use(cors());
 //This is for signup
 app.use("/user",Auth);
 //This is for signin

@@ -1,0 +1,6 @@
+<div class="container">
+  <p *ngIf="error">{{error}}</p>
+  <div class='row'>
+      <app-product-item  class='col col-3' *ngFor="let item of products" [productItem]="item"></app-product-item>
+  </div>
+</div>

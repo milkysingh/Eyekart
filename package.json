@@ -4,7 +4,7 @@
   "description": "This project is built using MEAN stack.",
   "main": "app.js",
   "scripts": {
-    "start":"nodemon server/app",
+    "start": "nodemon server/app",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -12,6 +12,7 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.17.2",
+    "bootstrap": "^3.3.7",
     "cors": "^2.8.4",
     "express": "^4.15.4",
     "jsonwebtoken": "^7.4.3",
