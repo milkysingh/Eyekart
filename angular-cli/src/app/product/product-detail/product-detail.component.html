@@ -1,26 +1,42 @@
-<div >
-    <p></p>
+<link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+<div class="container" *ngIf="selectedProduct">
+  <div class="row" style="padding-top: 10%">
+    <div class="col-lg-8">
+      <img src={{selectedProduct.images[0]}} class="img-responsive">
+    </div>
+    <div class="col-lg-4 c " style="padding-left: 20px; padding-top: 10px;background-color:snow;">
+      <h4>{{selectedProduct.name}} </h4>
+      <hr>
 
+      <h5 style="font-family: raleway ;">LENSKART PRICE</h5>
+     <strong>{{selectedProduct.price}}</strong>
+      <hr>
+      <div style="padding-bottom: 25px">
+        <span style="font-family: raleway" >Quantity: </span> <input type="number" name="" style="width: 50px; border-radius: 5px" value=1 #quant>
+      </div>
+      <div style="padding-bottom: 50px">
+        <div class="row">
+          <div class="col-xs-2">
+            <div class="box"><button class="btn btn-primary" style="border-radius: 25px;"> <i class="fa fa-play" aria-hidden="true"></i>  BUY NOW</button></div>
+          </div>
+          <div class="col-xs-2">
+            <div class="box"><button class="btn btn-primary" style="border-radius: 25px;margin-left:130px" (click)="addToCart()"> <i class="fa fa-cart-plus" aria-hidden="true" ></i>  ADD TO CART</button></div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <button class="btn btn-danger" style="padding-left:60px ; padding-right: 60px ;border-radius: 25px;"> <i class="fa fa-heart-o" aria-hidden="true"></i> Add to wishlist</button>
+      </div>
+      <hr>
+
+      <h4 style="text-align: right"><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a> <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>        <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></h4>
+
+
+    </div>
+
+  </div>
 </div>
-<div class="container">
-		<div class="row"  style="padding-top: 12%">
-			<div class="col-lg-8" >
-				<img src={{selectedProduct.images[0]}} class="img-responsive">
-			</div>
-			<div class="col-lg-4 c " style="padding-left: 20px; padding-top: 10px" >
-			<h5>{{selectedProduct.name}}</h5>
-				<h6>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-				quis nostrud.</h6>
-				<h5>LENSKART PRICE</h5>
-        {{selectedProduct.price}}
-				<hr>
-				<div class="box"><button class="btn-warning">BUY NOW</button></div>
- 				<div class="box"><button class="btn-warning"> ADD TO CART</button></div>
 
- 				<hr>
 
-			</div>
-
-		</div>
-	</div>

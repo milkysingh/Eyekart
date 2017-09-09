@@ -11,8 +11,10 @@ import { ProductDetailComponent } from './product/product-detail/product-detail.
 import { ProductItemComponent } from './product/product-list/product-item/product-item.component';
 import {ProductDatabaseService  } from "./product/services/product-database.service";
 import { ProductService } from "./product/services/product.service";
+import { CartService } from "./cart/cart-service.service";
 import { SigninComponent } from './Auth/signin/signin.component';
 import { SignupComponent } from './Auth/signup/signup.component';
+import { CartComponent } from './cart/cart.component';
 
 const appRoute:Route[]=[
  {path:"products",component:ProductComponent,children:[
@@ -22,6 +24,7 @@ const appRoute:Route[]=[
  {path:"", redirectTo:"products",pathMatch:"full"},
   {path:"signin",component:SigninComponent},
   {path:"signup",component:SignupComponent},
+  {path:"cart",component:CartComponent},
 
   {path:"**",redirectTo:"/products"}
 
@@ -35,7 +38,8 @@ const appRoute:Route[]=[
     ProductDetailComponent,
     ProductItemComponent,
     SigninComponent,
-    SignupComponent
+    SignupComponent,
+    CartComponent
   ],
   imports: [
     BrowserModule,
@@ -43,7 +47,7 @@ const appRoute:Route[]=[
     FormsModule,
     RouterModule.forRoot(appRoute)
   ],
-  providers: [ProductDatabaseService,ProductService],
+  providers: [ProductDatabaseService,ProductService,CartService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

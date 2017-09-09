@@ -7,6 +7,7 @@ export class Product{
     public price:number ,
     public seller:string,
     public size :string[],
-    public images:string[]
+    public images:string[],
+    public quantity:number
   ){}
 }

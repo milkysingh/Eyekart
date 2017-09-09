@@ -25,7 +25,7 @@ getProductByPosition(pos: number) {
   return this.selectedProduct._id;
 }
 
-findById(id) {
+findById(id) {//Improve it
   return this.products.find(data => {
     return data._id === id
   });
