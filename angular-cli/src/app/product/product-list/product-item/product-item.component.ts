@@ -12,7 +12,7 @@ export class ProductItemComponent implements OnInit {
  @Input() productItem:Product;
  @Input()position:number;
 id;
-@Input()changeView:boolean;
+
 
   constructor(
     private productService:ProductService,
@@ -27,8 +27,7 @@ id;
   {
 
  this.id=this.productService.getProductByPosition(this.position);
-this.router.navigate([`${this.id}`],{relativeTo:this.route});
-this.changeView=false;
+ this.router.navigate([`${this.id}`],{relativeTo:this.route});
   }
 
 }

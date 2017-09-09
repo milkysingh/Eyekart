@@ -16,9 +16,8 @@ import { SignupComponent } from './Auth/signup/signup.component';
 
 const appRoute:Route[]=[
  {path:"products",component:ProductComponent,children:[
-  {path:":category",component:ProductListComponent,children:[
-    {path:":id",component:ProductDetailComponent}
-  ]},
+  {path:":category",component:ProductListComponent},
+    {path:":category/:id",component:ProductDetailComponent}
  ]},
  {path:"", redirectTo:"products",pathMatch:"full"},
   {path:"signin",component:SigninComponent},

@@ -1,7 +1,7 @@
 <div class="container">
   <p *ngIf="error">{{error}}</p>
   <div class='row'>
-      <app-product-item  class='col col-3' *ngFor="let item of products let i = index" [productItem]="item" [position] = "i" [changeView]="flag"></app-product-item>
-    <router-outlet></router-outlet>
+      <app-product-item  class='col col-3' *ngFor="let item of products let i = index" [productItem]="item" [position] = "i"></app-product-item>
+
     </div>
 </div>

@@ -3,28 +3,33 @@ import { Product } from "../product.model";
 import {Subject} from "rxjs/Subject"
 @Injectable()
 export class ProductService{
-private products:Product[]=[];
+private products: Product[] = [];
 
-refreshProducts=new Subject<void>();
-selectedProduct=new Subject<Product>();
-getProducts()
-{
+refreshProducts = new Subject < void > ();
+selectedProduct: Product;
+getProducts() {
   return this.products.slice();
 }
 
-setProducts(data:Product[]){
+setProducts(data: Product[]) {
   console.log(data);
-  this.products=data;
+  this.products = data;
   this.refreshProducts.next();
   console.log(this.products.length);
 }
 
-getProductByPosition(pos:number)
-{
-  const selectedProduct= this.products[pos];
+getProductByPosition(pos: number) {
+  this.selectedProduct = this.products[pos];
 
-  this.selectedProduct.next(selectedProduct);
-  return selectedProduct._id;
+
+  return this.selectedProduct._id;
+}
+
+findById(id) {
+  return this.products.find(data => {
+    return data._id === id
+  });
 }
 
 }
+
