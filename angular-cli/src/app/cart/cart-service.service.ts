@@ -9,8 +9,16 @@ export class CartService {
 
   fillCart(data:Product){
     this.cartProduct.push(data);
+    localStorage.setItem('Cart', JSON.stringify(this.cartProduct));
     this.onProductsChanged.next(this.cartProduct.slice());
-    console.log(this.cartProduct);
+
+  }
+
+  fillCartArray(data:Product[]){
+    this.cartProduct = data;
+    localStorage.setItem('Cart', JSON.stringify(this.cartProduct));
+    this.onProductsChanged.next(this.cartProduct.slice());
+
   }
 
   getCart(){
@@ -20,6 +28,7 @@ export class CartService {
   removeProduct(index:number)
   {
     this.cartProduct.splice(index,1);
+    localStorage.setItem('Cart', JSON.stringify(this.cartProduct));
     this.onProductsChanged.next(this.cartProduct.slice());
   }
 

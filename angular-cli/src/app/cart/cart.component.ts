@@ -13,31 +13,32 @@ export class CartComponent implements OnInit {
 
   ngOnInit() {
 
-    this.addedProducts=this.cartService.getCart();
+    this.addedProducts = this.cartService.getCart();
     this.cartService.onProductsChanged.subscribe(
       (data) => {
-          this.addedProducts = data;
+        this.addedProducts = data;
 
-          localStorage.setItem('Cart',JSON.stringify(this.addedProducts));
       }
     );
-    if(this.addedProducts.length === 0)
-      {
-
-        this.isEmpty = true;
+    console.log("Hello",localStorage.getItem("Cart"));
+    if (this.addedProducts.length === 0 && ((localStorage.getItem("Cart")===null) || (JSON.parse(localStorage.getItem("Cart")).length===0))) {
+      this.isEmpty = true;
       }
-
+    if (this.addedProducts.length === 0 && ((JSON.parse(localStorage.getItem("Cart")).length!==0))) {
+      this.isEmpty = false;
+      this.addedProducts=JSON.parse(localStorage.getItem("Cart"));
+      this.cartService.fillCartArray(this.addedProducts);
+    }
 
   }
 
-  onRemoveClicked(index:number)
-  {
+  onRemoveClicked(index: number) {
     this.cartService.removeProduct(index);
-    if(this.addedProducts.length === 0)
-      {
-        this.isEmpty = true;
+    if (this.addedProducts.length === 0) {
+      this.isEmpty = true;
 
-      }
+    }
 
   }
-}
+  }
+
