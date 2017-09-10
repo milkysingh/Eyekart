@@ -20,7 +20,7 @@ export class CartComponent implements OnInit {
 
       }
     );
-    console.log("Hello",localStorage.getItem("Cart"));
+
     if (this.addedProducts.length === 0 && ((localStorage.getItem("Cart")===null) || (JSON.parse(localStorage.getItem("Cart")).length===0))) {
       this.isEmpty = true;
       }

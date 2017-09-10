@@ -24,5 +24,8 @@ category:string="";
     this.router.navigate([`/products/${category}`]);
   }
 
-
+  onLogout()
+  {
+    localStorage.clear();
+  }
 }

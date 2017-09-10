@@ -12,6 +12,7 @@ import { ProductItemComponent } from './product/product-list/product-item/produc
 import {ProductDatabaseService  } from "./product/services/product-database.service";
 import { ProductService } from "./product/services/product.service";
 import { CartService } from "./cart/cart-service.service";
+import { AuthService } from "./Auth/auth.service";
 import { SigninComponent } from './Auth/signin/signin.component';
 import { SignupComponent } from './Auth/signup/signup.component';
 import { CartComponent } from './cart/cart.component';
@@ -25,7 +26,6 @@ const appRoute:Route[]=[
   {path:"signin",component:SigninComponent},
   {path:"signup",component:SignupComponent},
   {path:"cart",component:CartComponent},
-
   {path:"**",redirectTo:"/products"}
 
 ]
@@ -47,7 +47,7 @@ const appRoute:Route[]=[
     FormsModule,
     RouterModule.forRoot(appRoute)
   ],
-  providers: [ProductDatabaseService,ProductService,CartService],
+  providers: [ProductDatabaseService,ProductService,CartService,AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

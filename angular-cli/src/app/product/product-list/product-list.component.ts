@@ -22,7 +22,8 @@ ngOnInit() {
     (params) => {
       this.productDatabase.fetchData(params.category).subscribe(
         (data) => {
-          this.productService.setProducts(data);
+         // console.log(data);
+         this.productService.setProducts(data);
         },
         err => {
           this.error = err;

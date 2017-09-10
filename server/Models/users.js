@@ -7,14 +7,13 @@ const UserSchema = mongoose.Schema({
     name: {
         type: String,
         required: true,
-        
     },
     email: {
         type: String,
         required: true,
         trim: true,
-        minlength: 1,
-        unique: true,
+        minlength: 5,
+        unique:true,
         validate: {
             isAsync: false,
             validator: validator.isEmail,

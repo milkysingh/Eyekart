@@ -16,9 +16,16 @@ const Lenses=require("./Routes/lenses");
 const Auth=require("./Routes/user");
 const newProduct=require("./Routes/add-new-product");
 
+var corsOptions = {
+    'allowedHeaders': ['test','sessionId', 'Content-Type'],
+    'exposedHeaders': ['x-auth'],
+    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204 
+  }
+
 app.use(body_parser.json());
 app.use(express.static(path.join(__dirname,"public")));
-app.use(cors());
+app.use(cors(corsOptions));
+
 //This is for signup
 app.use("/user",Auth);
 //This is for signin

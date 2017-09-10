@@ -9,8 +9,8 @@ router.post("/signup", (req, res) => {
         name: req.body.name,
         email: req.body.email,
         password: req.body.password,
-        phoneNo: req.body.phn
     });
+
     user.save().then(
         () => {
             return user.generateAuthToken();

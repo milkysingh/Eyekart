@@ -14,7 +14,9 @@ router.get("/", (req, res) => {
             }
         )
         .catch(
-            (err) => {
+            (err) =>
+             {
+                
                 res.send(400).send();
             }
         );
