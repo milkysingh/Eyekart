@@ -1,6 +1,6 @@
 <form (ngSubmit)="onSubmit(form)" #form="ngForm">
     <div class="form-group">
-        <label for="exampleInputEmail1">Name</label>
+        <label>Name</label>
         <input
          type="text"
          name="name"
@@ -10,24 +10,23 @@
          placeholder="Enter Name"
          ngModel
          >
-      <label for="exampleInputEmail1">Email address</label>
+      <label for="email">Email address</label>
       <input
        type="email"
        name="email"
        class="form-control"
-       id="exampleInputEmail1"
-       aria-describedby="emailHelp"
+       id="email"
        placeholder="Enter email"
        ngModel
        >
 
     </div>
     <div class="form-group">
-      <label for="exampleInputPassword1">Password</label>
+      <label for="password">Password</label>
       <input
        type="password"
         class="form-control"
-        id="exampleInputPassword1"
+        id="password"
          placeholder="Password"
          name="password"
          ngModel>

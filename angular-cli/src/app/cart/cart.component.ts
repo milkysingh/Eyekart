@@ -7,8 +7,8 @@ import { Product } from "../product/product.model";
   styleUrls: ['./cart.component.css']
 })
 export class CartComponent implements OnInit {
-   addedProducts:Product[];
-   isEmpty:boolean = false;
+   addedProducts:Product[]=[];
+   isEmpty:boolean = true;
   constructor(private cartService:CartService) { }
 
   ngOnInit() {
@@ -21,24 +21,28 @@ export class CartComponent implements OnInit {
       }
     );
 
-    if (this.addedProducts.length === 0 && ((localStorage.getItem("Cart")===null) || (JSON.parse(localStorage.getItem("Cart")).length===0))) {
-      this.isEmpty = true;
-      }
-    if (this.addedProducts.length === 0 && ((JSON.parse(localStorage.getItem("Cart")).length!==0))) {
+    if (JSON.parse(localStorage.getItem("Cart")) === null) {
+      console.log("null is present");
+      return;
+    }
+
+    if (JSON.parse(localStorage.getItem("Cart")).length !== 0) {
+
       this.isEmpty = false;
-      this.addedProducts=JSON.parse(localStorage.getItem("Cart"));
+      this.addedProducts = JSON.parse(localStorage.getItem("Cart"));
+      console.log(JSON.parse(localStorage.getItem("Cart")));
       this.cartService.fillCartArray(this.addedProducts);
     }
 
-  }
-
-  onRemoveClicked(index: number) {
-    this.cartService.removeProduct(index);
-    if (this.addedProducts.length === 0) {
-      this.isEmpty = true;
-
     }
 
-  }
-  }
+    onRemoveClicked(index: number) {
+      this.cartService.removeProduct(index);
+      if (this.addedProducts.length === 0) {
+        this.isEmpty = true;
+
+      }
+
+    }
+    }
 

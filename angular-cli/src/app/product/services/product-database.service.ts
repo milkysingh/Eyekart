@@ -11,7 +11,7 @@ export class ProductDatabaseService {
   fetchData(category:string){
      return this.http.get(`http://localhost:3000/${category}`).map(
       (response:Response) => {
-          console.log(response.headers.get('test'));
+
            return response.json();
      }
     );

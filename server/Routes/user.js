@@ -38,7 +38,9 @@ router.post('/signin', (req, res) => {
         )
         .then(
             (token) => {
-                res.header("x-auth", ).status(200).send("Sucessfully logged in!");
+                res.header("x-auth",token ).status(200).json({
+                    msg:"Success"
+                });
             }
         )
         .catch(
