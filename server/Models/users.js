@@ -13,7 +13,7 @@ const UserSchema = mongoose.Schema({
         required: true,
         trim: true,
         minlength: 5,
-        unique:true,
+        unique: true,
         validate: {
             isAsync: false,
             validator: validator.isEmail,
@@ -53,46 +53,49 @@ const UserSchema = mongoose.Schema({
             type: String,
             required: true
         }
+    }],
+    productsInCart: [{
+        type: mongoose.Schema.Types.ObjectId
     }]
 
 });
 
 UserSchema.methods.generateAuthToken = function () {
     let user = this;
-  let access='auth';
-  let token=jwt.sign({id:user._id.toHexString()},"secret123");
-   user.Tokens.push({access,token});
-   return user.save().then(
-       ()=>{
-           return token;
-       }
-   );
+    let access = 'auth';
+    let token = jwt.sign({
+        id: user._id.toHexString()
+    }, "secret123");
+    user.Tokens.push({
+        access,
+        token
+    });
+    return user.save().then(
+        () => {
+            return token;
+        }
+    );
 }
-UserSchema.methods.toJSON=function(){//this function detemines what exactly gets send back when a mongoose model get converted into JSON
-    let user=this;
-    let userObject=user.toObject();//this function is reponsible for taking our mongoose variable 'user' and converts into regular object
-    return _.pick(userObject,["name","email"]);
+UserSchema.methods.toJSON = function () { //this function detemines what exactly gets send back when a mongoose model get converted into JSON
+    let user = this;
+    let userObject = user.toObject(); //this function is reponsible for taking our mongoose variable 'user' and converts into regular object
+    return _.pick(userObject, ["name", "email"]);
 }
 
 UserSchema.statics.findByToken = function (token) {
+    const User = this;
     let decoded;
     try {
         decoded = jwt.verify(token, "secret123");
     } catch (e) {
-        return Promise.reject(e);
-    }
-    User.findOne({
-        "_id": decoded,
-        "Tokens.token": token,
-        "Tokens.access": 'auth'
-    }).then(
-        (user) => {
-            return user;
-        }
-    ).catch((err) => {
-        console.log(err);
-    });
+        return Promise.reject();
 
+    }
+    return User.findOne({
+        "_id": decoded.id,
+        "Tokens.token": token,
+        "Tokens.access": "auth"
+    });
 }
 
 UserSchema.statics.findByCredentials = function (email, password) {
@@ -134,4 +137,6 @@ UserSchema.pre('save', function (next) {
     }
 });
 const User = mongoose.model("Users", UserSchema);
-module.exports = {User};
+module.exports = {
+    User
+};

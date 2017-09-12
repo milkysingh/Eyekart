@@ -17,7 +17,7 @@ const Auth=require("./Routes/user");
 const newProduct=require("./Routes/add-new-product");
 
 var corsOptions = {
-    'allowedHeaders': ['sessionId', 'Content-Type'],
+    'allowedHeaders': ['sessionId', 'Content-Type','x-auth'],
     'exposedHeaders': ['x-auth'],
     optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204 
   }

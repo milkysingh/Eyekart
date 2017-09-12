@@ -1,8 +1,9 @@
 const express=require("express");
 const router=express.Router();
 const _=require("lodash");
-
+const {authenticate}=require("../Middleware/authenticate");
 const {User}=require('../Models/users');
+const{ObjectID} =require("mongodb")
 
 router.post("/signup", (req, res) => {
     let user = new User({
@@ -38,8 +39,8 @@ router.post('/signin', (req, res) => {
         )
         .then(
             (token) => {
-                res.header("x-auth",token ).status(200).json({
-                    msg:"Success"
+                res.header("x-auth", token).status(200).json({
+                    msg: "Success"
                 });
             }
         )
@@ -51,4 +52,16 @@ router.post('/signin', (req, res) => {
         );
 
 });
+
+router.post('/addToCart', authenticate, (req, res) => {
+
+
+    req.user.productsInCart.push(new ObjectID(req.body.cartProduct));
+    req.user.save()
+        .then(
+            () => {
+                res.status(200).send({msg:"Item saved"});
+            }
+        );
+})
 module.exports = router;

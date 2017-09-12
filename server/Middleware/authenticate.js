@@ -1,14 +1,18 @@
-const User=require('../Models/users');
-const authenticate=(req,res,next)=>{
-const user =this;
-let token=req.header('x-auth');
-let verifyUser=user.findByToken(token);
-if(!verifyUser){
-    return Promise.reject();
-}
-req.user = verifyUser;
-req.token = token;
-next();
+const {User}=require('../Models/users');
+var authenticate = (req, res, next) => {
+    var token = req.header("x-auth");
+    User.findByToken(token)
+    .then(user => {
+        if (!user) {
+            return Promise.reject();
+        }
+        req.user = user;
+        req.token = token;
+        next();
+    })
+    .catch(e => {
+        res.status(401).send(e);
+    });
 }
 
 module.exports = {authenticate};
