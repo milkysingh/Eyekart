@@ -55,7 +55,7 @@ const UserSchema = mongoose.Schema({
         }
     }],
     productsInCart: [{
-        type: mongoose.Schema.Types.ObjectId
+        pid:{type:String}
     }]
 
 });
@@ -80,6 +80,16 @@ UserSchema.methods.toJSON = function () { //this function detemines what exactly
     let user = this;
     let userObject = user.toObject(); //this function is reponsible for taking our mongoose variable 'user' and converts into regular object
     return _.pick(userObject, ["name", "email"]);
+}
+
+UserSchema.methods.removeProductById=function(id) {
+    const user=this;
+    return user.update({
+        $pull:{
+            productsInCart:{pid:id}
+        }
+    }
+    );
 }
 
 UserSchema.statics.findByToken = function (token) {

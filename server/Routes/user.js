@@ -56,12 +56,32 @@ router.post('/signin', (req, res) => {
 router.post('/addToCart', authenticate, (req, res) => {
 
 
-    req.user.productsInCart.push(new ObjectID(req.body.cartProduct));
+    req.user.productsInCart.push({pid:req.body.cartProduct});
     req.user.save()
         .then(
             () => {
                 res.status(200).send({msg:"Item saved"});
             }
+        )
+        .catch(
+            (e)=>{
+                res.status(400).send({msg:"Something went wrong"});
+            }
         );
+});
+
+router.patch("/removeFromCart",authenticate,(req,res)=>{
+    console.log(req.body.id);
+    req.user.removeProductById(req.body.id)
+    .then(
+        (data) =>{
+            res.status(200).send({msg:data})
+        }
+    )
+    .catch(
+        (e)=>{
+            res.status(400).send({msg:"Something went wrong"});
+        }
+    );
 })
 module.exports = router;
