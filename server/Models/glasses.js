@@ -37,5 +37,25 @@ const ProductSchema=mongoose.Schema({
 
 });
 
+ProductSchema.statics.findById=function(id) {
+    const product=this;
+
+  return product.findOne({"_id":id})
+       .then(
+           (data) => {
+      
+                return data;
+           }
+       )
+       .catch(
+           (e) =>{
+               console.log(e);
+               return;
+           }
+       );
+
+   
+}
+
 const Product=mongoose.model("Products",ProductSchema);
 module.exports={Product};

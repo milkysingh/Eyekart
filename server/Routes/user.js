@@ -3,7 +3,8 @@ const router=express.Router();
 const _=require("lodash");
 const {authenticate}=require("../Middleware/authenticate");
 const {User}=require('../Models/users');
-const{ObjectID} =require("mongodb")
+const{ObjectID} =require("mongodb");
+const {Product} =require("../Models/glasses");
 
 router.post("/signup", (req, res) => {
     let user = new User({
@@ -83,5 +84,36 @@ router.patch("/removeFromCart",authenticate,(req,res)=>{
             res.status(400).send({msg:"Something went wrong"});
         }
     );
-})
+});
+
+router.get("/getFromCart",authenticate,(req,res)=>{
+
+   const inCartProducts= req.user.productsInCart;
+if(inCartProducts.length===0){
+    res.status(200).send({cartProducts:[]});
+}
+   const productInfo=[];
+   inCartProducts.forEach(function(element) {
+Product.findById(element.pid)
+.then(
+    (data)=>{
+        // console.log(data);
+        inCartProducts.push(data);
+        // res.status(200).send(data);
+    }
+)
+.catch(
+    (e) => {
+        console.log(e);
+        res.status(400).send();
+    }
+);
+   });
+ 
+// console.log(Product.findById(inCartProducts));
+ setTimeout(function() {
+    res.send(productInfo);
+ }, 3000); 
+ } 
+);
 module.exports = router;
