@@ -1,10 +1,10 @@
-import { Component, OnInit,Input,OnDestroy,ViewChild } from '@angular/core';
-import { Product } from "../product.model";
-import { ProductService } from "../services/product.service";
-import { ProductDatabaseService } from "../services/product-database.service";
-import { Subscription } from "rxjs/Subscription";
-import { ActivatedRoute } from "@angular/router";
-import { CartService } from "../../cart/cart-service.service";
+import { Component, OnInit, Input, OnDestroy, ViewChild } from '@angular/core';
+import { Product } from '../product.model';
+import { ProductService } from '../services/product.service';
+import { ProductDatabaseService } from '../services/product-database.service';
+import { Subscription } from 'rxjs/Subscription';
+import { ActivatedRoute } from '@angular/router';
+import { CartService } from '../../cart/cart-service.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -22,7 +22,7 @@ export class ProductDetailComponent implements OnInit {
       private productService: ProductService,
       private route: ActivatedRoute,
       private productDatabase: ProductDatabaseService,
-      private cartService : CartService
+      private cartService: CartService
     ) {}
 
   ngOnInit() {
@@ -33,7 +33,7 @@ export class ProductDetailComponent implements OnInit {
           this.productDatabase.fetchData(data.category).subscribe(
             (products) => {
               this.productService.setProducts(products);
-              console.log("I ran!.");
+              console.log('I ran!.');
               this.selectedProduct = this.productService.findById(data.id);
             }
           );
@@ -43,11 +43,11 @@ export class ProductDetailComponent implements OnInit {
       }
     );
   }
-  addToCart(){
+  addToCart() {
     console.log(this.selectedProduct);
     this.selectedProduct.quantity = this.quantity.nativeElement.value;
-  this.cartService.fillCart(this.selectedProduct);
-  alert("Added to cart successfully");
+  this.cartService.fillCart(this.selectedProduct, this.quantity.nativeElement.value);
+  alert('Added to cart successfully');
 }
 
 

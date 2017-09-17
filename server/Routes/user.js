@@ -57,7 +57,7 @@ router.post('/signin', (req, res) => {
 router.post('/addToCart', authenticate, (req, res) => {
 
 
-    req.user.productsInCart.push({pid:req.body.cartProduct});
+    req.user.productsInCart.push({pid:req.body.cartProduct,quantity:req.body.quantity});
     req.user.save()
         .then(
             () => {
@@ -86,34 +86,52 @@ router.patch("/removeFromCart",authenticate,(req,res)=>{
     );
 });
 
-router.get("/getFromCart",authenticate,(req,res)=>{
+router.get("/getFromCart", authenticate, (req, res) => {
 
-   const inCartProducts= req.user.productsInCart;
-if(inCartProducts.length===0){
-    res.status(200).send({cartProducts:[]});
-}
-   const productInfo=[];
-   inCartProducts.forEach(function(element) {
-Product.findById(element.pid)
-.then(
-    (data)=>{
-        // console.log(data);
-        inCartProducts.push(data);
-        // res.status(200).send(data);
+    // getting array of product id (middleware);
+    // declaring all variable in one place, (Variable declartion pattern)
+    const inCardProducts = req.user.productsInCart;
+
+  
+
+    // cart is empty
+    if (_.isEmpty(inCardProducts)) {
+        return res.status(200).send([]);
     }
-)
-.catch(
-    (e) => {
-        console.log(e);
-        res.status(400).send();
-    }
-);
-   });
- 
-// console.log(Product.findById(inCartProducts));
- setTimeout(function() {
-    res.send(productInfo);
- }, 3000); 
- } 
-);
+
+    // as this is an async call, using promise feature 
+    // each findByID call would return a promise so using map function 
+    let promiseArray = _.map(inCardProducts, element => {
+        // the following is short circuit evaluation method.
+        // checking if element.id is not falsy (null, undefined, 0, false..)
+        return Product.findById(element.pid)
+            .then(data => {
+                     data.quantity=element.quantity;
+                return Promise.resolve(data);
+
+            })
+            .catch(err => {
+                // error occured, Promise rejected
+                console.log(err);
+                return Promise.reject({
+                    statusCode: 500,
+                    message: "Technical Error!"
+                });
+            })
+    });
+
+    // Now using promise.all feature , promise.all will wait till all prmoises in the array have been resolved,
+
+    Promise.all(promiseArray)
+        .then(values => {
+            // values will be an array of all promises resolved (object in our case)
+            
+            res.status(200).send(values);
+        })
+        .catch(err => {
+            // when any of the promise is reject
+            res.status(500).send(err);
+        });
+
+});
 module.exports = router;

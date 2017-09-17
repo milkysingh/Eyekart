@@ -55,7 +55,8 @@ const UserSchema = mongoose.Schema({
         }
     }],
     productsInCart: [{
-        pid:{type:String}
+        pid:{type:String},
+        quantity:{type:Number}
     }]
 
 });

@@ -33,7 +33,10 @@ const ProductSchema=mongoose.Schema({
              type: String,
              required: true
          }
-     ]
+     ],
+     quantity:{
+         type:Number
+     }
 
 });
 

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Http,Response} from "@angular/http";
-import "rxjs/Rx"
+import { Http, Response} from '@angular/http';
+import 'rxjs/Rx'
 @Injectable()
 export class AuthService {
 
@@ -8,7 +8,7 @@ export class AuthService {
 
   signUp(credentials) {
 
-    return this.http.post("http://localhost:3000/user/signup", credentials).map(
+    return this.http.post('http://localhost:3000/user/signup', credentials).map(
       (response: Response) => {
         localStorage.setItem('token', response.headers.get('x-auth'));
         return response.json();
@@ -17,9 +17,9 @@ export class AuthService {
   }
 
   signIn(credentials) {
-    return this.http.post("http://localhost:3000/user/signin", credentials).map(
+    return this.http.post('http://localhost:3000/user/signin', credentials).map(
       (response: Response) => {
-        console.log(response);
+
         localStorage.setItem('token', response.headers.get('x-auth'));
         return response.json();
       }

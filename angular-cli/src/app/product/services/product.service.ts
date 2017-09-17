@@ -1,6 +1,6 @@
-import { Injectable } from "@angular/core";
-import { Product } from "../product.model";
-import {Subject} from "rxjs/Subject"
+import { Injectable } from '@angular/core';
+import { Product } from '../product.model';
+import {Subject} from 'rxjs/Subject'
 @Injectable()
 export class ProductService {
   private products: Product[] = [];
@@ -25,7 +25,7 @@ export class ProductService {
     return this.selectedProduct._id;
   }
 
-  findById(id) { //Improve it
+  findById(id) { // Improve it
     return this.products.find(data => {
       return data._id === id
     });
