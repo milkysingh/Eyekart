@@ -88,44 +88,44 @@ router.patch("/removeFromCart",authenticate,(req,res)=>{
 
 router.get("/getFromCart", authenticate, (req, res) => {
 
-    // getting array of product id (middleware);
-    // declaring all variable in one place, (Variable declartion pattern)
-    const inCardProducts = req.user.productsInCart;
+            // getting array of product id (middleware);
+            // declaring all variable in one place, (Variable declartion pattern)
+            const inCardProducts = req.user.productsInCart;
 
-  
 
-    // cart is empty
-    if (_.isEmpty(inCardProducts)) {
-        return res.status(200).send([]);
-    }
 
-    // as this is an async call, using promise feature 
-    // each findByID call would return a promise so using map function 
-    let promiseArray = _.map(inCardProducts, element => {
-        // the following is short circuit evaluation method.
-        // checking if element.id is not falsy (null, undefined, 0, false..)
-        return Product.findById(element.pid)
-            .then(data => {
-                     data.quantity=element.quantity;
-                return Promise.resolve(data);
+            // cart is empty
+            if (_.isEmpty(inCardProducts)) {
+                return res.status(200).send([]);
+            }
 
-            })
-            .catch(err => {
-                // error occured, Promise rejected
-                console.log(err);
-                return Promise.reject({
-                    statusCode: 500,
-                    message: "Technical Error!"
-                });
-            })
-    });
+            // as this is an async call, using promise feature 
+            // each findByID call would return a promise so using map function 
+            let promiseArray = _.map(inCardProducts, element => {
+                // the following is short circuit evaluation method.
+                // checking if element.id is not falsy (null, undefined, 0, false..)
+                return Product.findById(element.pid)
+                    .then(data => {
+                        data.quantity = element.quantity;
+                        return Promise.resolve(data);
+
+                    })
+                    .catch(err => {
+                        // error occured, Promise rejected
+                        console.log(err);
+                        return Promise.reject({
+                            statusCode: 500,
+                            message: "Technical Error!"
+                        });
+                    })
+            });
 
     // Now using promise.all feature , promise.all will wait till all prmoises in the array have been resolved,
 
     Promise.all(promiseArray)
         .then(values => {
             // values will be an array of all promises resolved (object in our case)
-            
+
             res.status(200).send(values);
         })
         .catch(err => {
@@ -133,5 +133,22 @@ router.get("/getFromCart", authenticate, (req, res) => {
             res.status(500).send(err);
         });
 
-});
+    });
+
+    router.post("/addLocalProducts",authenticate,(req,res)=>{
+    // console.log(req.body.localProducts);
+   req.user.productsInCart.push(...req.body.localProducts);
+   req.user.save()
+   .then(
+    () => {
+        res.status(200).send({msg:"Data added succesfully"});
+    }
+   )
+   .catch(
+       (err) => {
+res.status(500).send(err);
+       }
+   )
+    res.end();
+    });
 module.exports = router;

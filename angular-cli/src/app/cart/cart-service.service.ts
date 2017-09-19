@@ -18,7 +18,7 @@ export class CartService {
       localStorage.setItem('Cart', JSON.stringify(this.cartProduct));
     }else {
       console.log('token is not null');
-      this.productDatabaseService.addCartData(data._id,quantity).subscribe(
+      this.productDatabaseService.addCartData(data._id, quantity).subscribe(
         () => {
           console.log('added to database');
         }
@@ -46,12 +46,15 @@ export class CartService {
     const removedProduct = this.cartProduct.splice(index, 1);
 
     // localStorage.setItem('Cart', JSON.stringify(this.cartProduct));
-    if (this.authService.isLoggedIn) {
+    if (this.authService.isLoggedIn()) {
+      console.log("lol");
       this.productDatabaseService.removeCartData(removedProduct[0]._id).subscribe(
         (data) => {
           console.log(data);
         }
       );
+    } else {
+      localStorage.setItem('Cart', JSON.stringify(this.cartProduct));
     }
 
     this.onProductsChanged.next(this.cartProduct.slice());

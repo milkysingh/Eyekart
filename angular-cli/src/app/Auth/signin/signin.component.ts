@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {AuthService  } from "../auth.service";
-import { Router } from "@angular/router";
+import {AuthService  } from '../auth.service';
+import { Router } from '@angular/router';
+import { ProductDatabaseService } from '../../product/services/product-database.service';
 @Component({
   selector: 'app-signin',
   templateUrl: './signin.component.html',
@@ -8,7 +9,7 @@ import { Router } from "@angular/router";
 })
 export class SigninComponent implements OnInit {
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router, private productDatabaseService: ProductDatabaseService) {}
 
   ngOnInit() {}
 
@@ -19,11 +20,32 @@ export class SigninComponent implements OnInit {
     }
     this.authService.signIn(sendData).subscribe(
       (response) => {
-        this.router.navigate(["/"]);
+if (localStorage.getItem('Cart') !== null) {
+  const localData = [];
+  JSON.parse(localStorage.getItem('Cart')).forEach(element => {
+    const pid = element._id;
+    const quantity = element.quantity;
+    localData.push({
+      pid,
+      quantity
+    });
+  });
+  this.productDatabaseService.sendLocalCart(localData)
+    .subscribe(
+      () => {
+        console.log('local storage products are added successfully to database');
+      }
+    );
+}
+
+
+        this.router.navigate(['/']);
       }
     );
   }
 
 
-}
+
+  }
+
 
