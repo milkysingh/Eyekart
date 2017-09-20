@@ -24,13 +24,15 @@ export class SignupComponent implements OnInit {
       email: form.value.email,
       password: form.value.password
     }
-this.authService.signUp(sendData).subscribe(
-  (data) =>{
-    this.router.navigate(["/"]);
-    console.log(data);
+    this.authService.signUp(sendData).subscribe(
+      (data) => {
+        this.authService.loadDataFromLocalStorage();
+        this.router.navigate(['/']);
+        console.log(data);
+      }
+    )
   }
-)
   }
-}
+
 
 

@@ -9,13 +9,13 @@ import { AuthService } from '../Auth/auth.service';
   styleUrls: ['./cart.component.css']
 })
 export class CartComponent implements OnInit {
-   addedProducts: Product[]= [];
-   isEmpty: boolean = true;
+  addedProducts: Product[] = [];
+  isEmpty: boolean = true;
   constructor(
     private cartService: CartService,
     private productDatabaseService: ProductDatabaseService,
     private authService: AuthService
-  ) { }
+  ) {}
 
   ngOnInit() {
 
@@ -42,9 +42,9 @@ export class CartComponent implements OnInit {
         );
       return;
     }
-if ( JSON.parse(localStorage.getItem('Cart')) === null) {
-  return;
-}
+    if (JSON.parse(localStorage.getItem('Cart')) === null) {
+      return;
+    }
     if (JSON.parse(localStorage.getItem('Cart')).length !== 0) {
 
       this.isEmpty = false;
@@ -58,9 +58,9 @@ if ( JSON.parse(localStorage.getItem('Cart')) === null) {
     this.cartService.removeProduct(index);
     if (this.addedProducts.length === 0) {
       this.isEmpty = true;
-
     }
 
   }
   }
+
 

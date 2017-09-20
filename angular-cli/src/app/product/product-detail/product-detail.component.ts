@@ -19,11 +19,11 @@ export class ProductDetailComponent implements OnInit {
   @ViewChild('quant') quantity;
 
   constructor(
-      private productService: ProductService,
-      private route: ActivatedRoute,
-      private productDatabase: ProductDatabaseService,
-      private cartService: CartService
-    ) {}
+    private productService: ProductService,
+    private route: ActivatedRoute,
+    private productDatabase: ProductDatabaseService,
+    private cartService: CartService
+  ) {}
 
   ngOnInit() {
     this.route.params.subscribe(
@@ -43,6 +43,7 @@ export class ProductDetailComponent implements OnInit {
       }
     );
   }
+
   addToCart() {
     console.log(this.selectedProduct);
     this.selectedProduct.quantity = this.quantity.nativeElement.value;

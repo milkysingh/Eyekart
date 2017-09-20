@@ -10,42 +10,24 @@ import { ProductDatabaseService } from '../../product/services/product-database.
 export class SigninComponent implements OnInit {
 
   constructor(private authService: AuthService, private router: Router, private productDatabaseService: ProductDatabaseService) {}
+ngOnInit() {}
 
-  ngOnInit() {}
-
-  onSubmit(form) {
-    const sendData = {
-      email: form.value.email,
-      password: form.value.password
+onSubmit(form) {
+  const sendData = {
+    email: form.value.email,
+    password: form.value.password
+  }
+  this.authService.signIn(sendData).subscribe(
+    (response) => {
+      this.authService.loadDataFromLocalStorage();
+      this.router.navigate(['/']);
+    },
+    (err) => {
+      console.log('there is an error');
     }
-    this.authService.signIn(sendData).subscribe(
-      (response) => {
-if (localStorage.getItem('Cart') !== null) {
-  const localData = [];
-  JSON.parse(localStorage.getItem('Cart')).forEach(element => {
-    const pid = element._id;
-    const quantity = element.quantity;
-    localData.push({
-      pid,
-      quantity
-    });
-  });
-  this.productDatabaseService.sendLocalCart(localData)
-    .subscribe(
-      () => {
-        console.log('local storage products are added successfully to database');
-      }
-    );
+  );
+}
 }
 
-
-        this.router.navigate(['/']);
-      }
-    );
-  }
-
-
-
-  }
 
 
