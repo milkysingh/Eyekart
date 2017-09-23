@@ -10,7 +10,7 @@ import { AuthService } from '../Auth/auth.service';
 })
 export class CartComponent implements OnInit {
   addedProducts: Product[] = [];
-  isEmpty: boolean = true;
+  // isEmpty = true;
   constructor(
     private cartService: CartService,
     private productDatabaseService: ProductDatabaseService,
@@ -23,44 +23,17 @@ export class CartComponent implements OnInit {
     this.cartService.onProductsChanged.subscribe(
       (data) => {
         this.addedProducts = data;
-
       }
     );
 
-    if (this.authService.isLoggedIn()) {
-      console.log('null is present');
-      this.productDatabaseService.fetchCartData()
-        .subscribe(
-          (items) => {
-            this.addedProducts = items;
-
-            if (this.addedProducts.length !== 0) {
-              this.cartService.fillCartArray(this.addedProducts);
-              this.isEmpty = false;
-            }
-          }
-        );
-      return;
-    }
-    if (JSON.parse(localStorage.getItem('Cart')) === null) {
-      return;
-    }
-    if (JSON.parse(localStorage.getItem('Cart')).length !== 0) {
-
-      this.isEmpty = false;
-      this.addedProducts = JSON.parse(localStorage.getItem('Cart'));
-      this.cartService.fillCartArray(this.addedProducts);
-    }
-
   }
+
 
   onRemoveClicked(index: number) {
     this.cartService.removeProduct(index);
     if (this.addedProducts.length === 0) {
-      this.isEmpty = true;
     }
 
   }
   }
-
 

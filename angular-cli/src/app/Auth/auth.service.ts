@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Response} from '@angular/http';
+import { Http, Response, Headers} from '@angular/http';
 import { ProductDatabaseService } from '../product/services/product-database.service';
 import 'rxjs/Rx'
 @Injectable()
@@ -29,6 +29,20 @@ export class AuthService {
 
   isLoggedIn() {
     return localStorage.getItem('token') !== null;
+  }
+
+  removeToken() {
+const token = localStorage.getItem('token');
+const headers = new Headers();
+headers.append('x-auth', token);
+this.http.delete(`http://localhost:3000/user/removeToken?token=${token}`, {headers}).subscribe(
+  () => {
+    console.log('Token removed');
+  },
+  err => {
+console.log(err);
+  }
+);
   }
 
 loadDataFromLocalStorage() {

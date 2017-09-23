@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Response, Headers, RequestOptions } from '@angular/http';
+import { Http, Response, Headers } from '@angular/http';
 import { HttpParams} from '@angular/common/http';
 import 'rxjs/Rx'
 import { Product } from '../product.model';
@@ -58,12 +58,10 @@ export class ProductDatabaseService {
     this.token = this.getToken();
     const headers = new Headers();
     headers.append('x-auth', this.token);
-    return this.http.get('http://localhost:3000/user/getFromCart', {
-        headers
-      })
+    return this.http.get('http://localhost:3000/user/getFromCart', { headers  })
       .map(
         (response: Response) => {
-          console.log(response);
+
           return response.json();
         }
       );

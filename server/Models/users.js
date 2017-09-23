@@ -93,6 +93,17 @@ UserSchema.methods.removeProductById=function(id) {
     );
 }
 
+UserSchema.methods.removeToken=function(token){
+    var user=this;
+    return user.update({
+        $pull:{
+            Tokens:{token}
+        }
+    });
+   
+};
+
+
 UserSchema.statics.findByToken = function (token) {
     const User = this;
     let decoded;
@@ -108,6 +119,7 @@ UserSchema.statics.findByToken = function (token) {
         "Tokens.access": "auth"
     });
 }
+
 
 UserSchema.statics.findByCredentials = function (email, password) {
     const user = this;

@@ -48,7 +48,7 @@ export class ProductDetailComponent implements OnInit {
     console.log(this.selectedProduct);
     this.selectedProduct.quantity = this.quantity.nativeElement.value;
   this.cartService.fillCart(this.selectedProduct, this.quantity.nativeElement.value);
-  alert('Added to cart successfully');
+
 }
 
 

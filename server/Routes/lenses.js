@@ -4,9 +4,15 @@ const router=express.Router();
 const {Product}=require('../Models/glasses');
 const {ObjectId}=require("mongodb");
 router.get("/", (req, res) => {
+    let counter = 0;
+    if (req.query.count !== undefined) {
+        counter = parseInt(req.query.count);
+    }
     Product.find({
             category: "Lenses"
         })
+        .limit(4)
+        .skip(counter)
         .then(
             (allLen) => {
                 res.status(200).send(allLen);
@@ -14,7 +20,8 @@ router.get("/", (req, res) => {
         )
         .catch(
             (err) => {
-                res.send(400).send();
+
+                res.status(400).send(err);
             }
         );
 });

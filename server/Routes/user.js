@@ -35,6 +35,7 @@ router.post('/signin', (req, res) => {
     User.findByCredentials(body.email, body.password)
         .then(
             (user) => {
+              
                 return user.generateAuthToken();
             }
         )
@@ -72,7 +73,7 @@ router.post('/addToCart', authenticate, (req, res) => {
 });
 
 router.patch("/removeFromCart",authenticate,(req,res)=>{
-    console.log(req.body.id);
+   
     req.user.removeProductById(req.body.id)
     .then(
         (data) =>{
@@ -91,7 +92,7 @@ router.get("/getFromCart", authenticate, (req, res) => {
     // getting array of product id (middleware);
     // declaring all variable in one place, (Variable declartion pattern)
     const inCardProducts = req.user.productsInCart;
-console.log(inCardProducts);
+
 
 
     // cart is empty
@@ -106,7 +107,7 @@ console.log(inCardProducts);
         // checking if element.id is not falsy (null, undefined, 0, false..)
         return Product.findById(element.pid)
             .then(data => {
-                console.log(data);
+                
                 data.quantity = element.quantity;
                 return Promise.resolve(data);
 
@@ -137,7 +138,7 @@ console.log(inCardProducts);
 });
 
     router.post("/addLocalProducts",authenticate,(req,res)=>{
-    // console.log(req.body.localProducts);
+   
    req.user.productsInCart.push(...req.body.localProducts);
    req.user.save()
    .then(
@@ -151,5 +152,16 @@ res.status(500).send(err);
        }
    )
     res.end();
+    });
+
+    router.delete("/removeToken",authenticate,(req,res)=>{
+     
+        req.user.removeToken(req.token).then(()=>{
+            res.status(200).send();
+        },
+        ()=>{
+            res.status(400).send();
+        });
+      
     });
 module.exports = router;

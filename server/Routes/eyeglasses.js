@@ -42,8 +42,8 @@ router.get("/", (req, res) => {
             .limit(4)
             .skip(counter)
             .then(
-                (allSun) => {
-                    res.status(200).send(allSun);
+                (allEye) => {
+                    res.status(200).send(allEye);
                 }
             )
             .catch(

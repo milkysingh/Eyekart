@@ -23,11 +23,28 @@ noOfProductsInCart: number;
   ) { }
 
   ngOnInit() {
+
     this.cartService.onCartItemChange.subscribe(
  (data) => {
    this.noOfProductsInCart = data;
  }
     )
+    if (this.authService.isLoggedIn()) {
+      this.productDatabaseService.fetchCartData().subscribe
+      (
+        (data) => {
+         this.cartService.fillCartArray(data);
+        },
+        (err) => {
+          console.log(err);
+        }
+      )
+    }else {
+      if (JSON.parse(localStorage.getItem('Cart')) === null) {
+        return;
+      }
+      this.cartService.fillCartArray(JSON.parse(localStorage.getItem('Cart')));
+    }
   }
 
   setCategory(category) {
@@ -36,8 +53,9 @@ noOfProductsInCart: number;
   }
 
   onLogout() {
-    localStorage.clear();
     this.cartService.emptyCart();
     this.noOfProductsInCart = 0;
+    this.authService.removeToken();
+    localStorage.clear();
   }
 }
