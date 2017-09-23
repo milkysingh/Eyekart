@@ -10,7 +10,8 @@ import { CartService } from '../cart/cart-service.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-category: string = '';
+category = '';
+noOfProductsInCart: number;
 
   constructor(
     private productDatabaseService: ProductDatabaseService,
@@ -22,6 +23,11 @@ category: string = '';
   ) { }
 
   ngOnInit() {
+    this.cartService.onCartItemChange.subscribe(
+ (data) => {
+   this.noOfProductsInCart = data;
+ }
+    )
   }
 
   setCategory(category) {
@@ -32,5 +38,6 @@ category: string = '';
   onLogout() {
     localStorage.clear();
     this.cartService.emptyCart();
+    this.noOfProductsInCart = 0;
   }
 }

@@ -4,28 +4,17 @@ const router=express.Router();
 const {Product}=require('../Models/glasses');
 const {ObjectId}=require("mongodb");
 
-router.get("/loadmore", (req, res) => {
 
-    Product.find({
-            category: "Sunglasses"
-        }).limit(2)
-        .skip(2)
-        .then(
-            (data) => {
-                res.status(200).send(data);
-            }
-        )
-        .catch(
-            (err) => {
-                res.status(400).send(err);
-            }
-        );
-
-});
 router.get("/", (req, res) => {
+    let counter = 0;
+    if (req.query.count !== undefined) {
+        counter = parseInt(req.query.count);
+    }
     Product.find({
             category: "Sunglasses"
         })
+        .limit(4)
+        .skip(counter)
         .then(
             (allSun) => {
                 res.status(200).send(allSun);
@@ -34,9 +23,10 @@ router.get("/", (req, res) => {
         .catch(
             (err) => {
 
-                res.send(400).send();
+                res.status(400).send(err);
             }
         );
+
 });
 router.get("/:id", (req, res) => {
 

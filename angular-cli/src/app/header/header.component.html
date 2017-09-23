@@ -29,7 +29,16 @@
         <li><a style="cursor:pointer" routerLink=signup *ngIf="!authService.isLoggedIn()">Signup <i class="fa fa-user-plus" aria-hidden="true"></i></a></li>
         <li><a style="cursor:pointer" routerLink="signin" *ngIf="!authService.isLoggedIn()"> Signin <i class="fa fa-sign-in" aria-hidden="true"></i></a></li>
         <li><a style="cursor:pointer" routerLink="/" (click)="onLogout()" *ngIf="authService.isLoggedIn()"> Logout <i class="fa fa-sign-in" aria-hidden="true"></i></a></li>
-        <li><a style="cursor:pointer" routerLink="cart">Cart <i class="fa fa-shopping-cart" aria-hidden="true"></i></a></li>
+        <li>
+          <a style="cursor:pointer" routerLink="cart">
+            Cart
+            <i class="fa fa-shopping-cart" aria-hidden="true">
+              </i>
+              <span class="badge badge-pill badge-danger" style="background-color:red;color:white" *ngIf="this.noOfProductsInCart">
+                {{this.noOfProductsInCart}}
+              </span>
+            </a>
+          </li>
       </ul>
     </div>
   </div>

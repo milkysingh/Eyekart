@@ -60,5 +60,22 @@ ProductSchema.statics.findById=function(id) {
    
 }
 
+ProductSchema.statics.counter=function(category) {
+  
+    const product=this;
+    return product.count({category})
+    .then(
+        (data) => {
+            return data;
+        }
+    )
+    .catch(
+        e => {
+            console.log(e);
+            return;
+        }
+    );
+}
+
 const Product=mongoose.model("Products",ProductSchema);
 module.exports={Product};

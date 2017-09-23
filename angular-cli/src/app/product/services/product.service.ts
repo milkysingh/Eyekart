@@ -12,10 +12,8 @@ export class ProductService {
   }
 
   setProducts(data: Product[]) {
-    // console.log(data);
     this.products = data;
     this.refreshProducts.next();
-    // console.log(this.products.length);
   }
 
   getProductByPosition(pos: number) {
@@ -29,6 +27,11 @@ export class ProductService {
     return this.products.find(data => {
       return data._id === id
     });
+  }
+
+  appendProducts(data: Product[]) {
+    this.products.push(...data);
+    this.refreshProducts.next();
   }
 
 

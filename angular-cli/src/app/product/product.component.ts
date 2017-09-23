@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {ProductDatabaseService  } from '../product/services/product-database.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-product',
@@ -7,12 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProductComponent implements OnInit {
 
-  constructor(
-
-  ) { }
+  category: string;
+  constructor(private productDatabaseService: ProductDatabaseService, private route: ActivatedRoute) { }
 
   ngOnInit() {
 
   }
+
 
 }

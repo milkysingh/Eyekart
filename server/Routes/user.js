@@ -91,7 +91,7 @@ router.get("/getFromCart", authenticate, (req, res) => {
     // getting array of product id (middleware);
     // declaring all variable in one place, (Variable declartion pattern)
     const inCardProducts = req.user.productsInCart;
-
+console.log(inCardProducts);
 
 
     // cart is empty
@@ -106,6 +106,7 @@ router.get("/getFromCart", authenticate, (req, res) => {
         // checking if element.id is not falsy (null, undefined, 0, false..)
         return Product.findById(element.pid)
             .then(data => {
+                console.log(data);
                 data.quantity = element.quantity;
                 return Promise.resolve(data);
 

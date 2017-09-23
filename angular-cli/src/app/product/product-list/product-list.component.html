@@ -2,6 +2,20 @@
   <p *ngIf="error">{{error}}</p>
   <div class='row'>
  <app-product-item  class='col col-3' *ngFor="let item of products let i = index" [productItem]="item" [position] = "i"></app-product-item>
-
     </div>
+    <div class="row" *ngIf="!noMore" >
+        <div class="col xs-12"style="position:center" >
+          <br>
+          <button type="button" class="btn btn-primary btn-lg btn-block" (click)="loadMoreProduct()" >Load more</button>
+          </div>
+       </div>
+
+       <div class="row"  *ngIf="noMore" >
+          <div class="col xs-12" >
+            <br>
+             <h4 style="color:burlywood" align="center" >No more products available</h4>
+            </div>
+         </div>
+
 </div>
+
